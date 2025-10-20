@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Tablero de Gramática</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="game-tools">
+            <div class="pawns-container" id="pawns-container">
+                <h3>Fichas (Arrastra para jugar)</h3>
+                <div class="pawn-box">
+                    <div class="pawn" id="pawn-red" draggable="true" style="background-color: #e74c3c;"></div>
+                    <div class="pawn" id="pawn-blue" draggable="true" style="background-color: #3498db;"></div>
+                    <div class="pawn" id="pawn-green" draggable="true" style="background-color: #2ecc71;"></div>
+                    <div class="pawn" id="pawn-yellow" draggable="true" style="background-color: #f1c40f;"></div>
+                </div>
+            </div>
+            <div class="dice-container">
+                <h3>Dado</h3>
+                <div class="dice" id="dice">
+                    <div class="dice-face" id="dice-face">🎲</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="board" id="board">
+            <div class="square start"><span>1</span>SALIDA</div>
+            
+            <button class="square question-btn" data-question-index="0">2</button>
+            <button class="square question-btn" data-question-index="1">3</button>
+            <button class="square question-btn" data-question-index="2">4</button>
+            <button class="square question-btn" data-question-index="3">5</button>
+            <button class="square question-btn" data-question-index="4">6</button>
+            <button class="square question-btn" data-question-index="5">7</button>
+            <button class="square question-btn" data-question-index="6">8</button>
+            <button class="square question-btn" data-question-index="7">9</button>
+            <button class="square question-btn" data-question-index="8">10</button>
+            <button class="square question-btn" data-question-index="9">11</button>
+            <button class="square question-btn" data-question-index="10">12</button>
+            <button class="square question-btn" data-question-index="11">13</button>
+            <button class="square question-btn" data-question-index="12">14</button>
+            <button class="square question-btn" data-question-index="13">15</button>
+            <button class="square question-btn" data-question-index="14">16</button>
+            <button class="square question-btn" data-question-index="15">17</button>
+            <button class="square question-btn" data-question-index="16">18</button>
+            <button class="square question-btn" data-question-index="17">19</button>
+            <button class="square question-btn" data-question-index="18">20</button>
+            <button class="square question-btn" data-question-index="19">21</button>
+            <button class="square question-btn" data-question-index="20">22</button>
+            <button class="square question-btn" data-question-index="21">23</button>
+            <button class="square question-btn" data-question-index="22">24</button>
+            <button class="square question-btn" data-question-index="23">25</button>
+            <button class="square question-btn" data-question-index="24">26</button>
+            <button class="square question-btn" data-question-index="25">27</button>
+            <button class="square question-btn" data-question-index="26">28</button>
+            <button class="square question-btn" data-question-index="27">29</button>
+            <button class="square question-btn" data-question-index="28">30</button>
+            <button class="square question-btn" data-question-index="29">31</button>
+            
+            <div class="square finish"><span>32</span>LLEGADA</div>
+        </div>
+    </div>
+
+    <div id="popup-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <div id="question-content">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
