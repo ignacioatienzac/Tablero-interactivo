@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. DATOS DE PREGUNTAS ---
+    // --- 1. DATOS DE PREGUNTAS Y SOLUCIONES ---
+
     // Array con las 30 preguntas
     const questions = [
         // 0 (Casilla 2)
@@ -65,32 +66,68 @@ document.addEventListener('DOMContentLoaded', () => {
         '<h4>Instrucciones: Responde a la situación dando un consejo, como se indica.</h4><p>(Situación) Un amigo tiene dolor de estómago después de una comida pesada.<br>(Tarea) Dale un consejo usando "Puedes...".</p>'
     ];
 
+    // NUEVO: Array con las 30 soluciones en orden
+    const solutions = [
+        "<b>Correcta.</b>", // Casilla 2
+        "<b>use</b>", // Casilla 3
+        "<b>(Ejemplo) Deberías</b> comer alimentos ricos en hierro.", // Casilla 4
+        "<b>ponlos</b>", // Casilla 5
+        "<b>Incorrecta.</b> Corrección: Me <b>duelen</b> mucho los oídos.", // Casilla 6
+        "<b>(Ejemplo) ¡Intenta</b> usar un esmalte especial!", // Casilla 7
+        "<b>bebed</b>", // Casilla 8
+        "<b>Incorrecta.</b> Corrección: <b>Soy</b> de Bilbao, pero ahora <b>estoy</b> en Madrid.", // Casilla 9
+        "<b>(Ejemplo) Tienes que</b> levantarte cada hora y caminar un poco.", // Casilla 10
+        "<b>haz</b>", // Casilla 11
+        "<b>Incorrecta.</b> Corrección: Mi hermano está muy nervioso porque <b>está</b> haciendo un máster.", // Casilla 12
+        "<b>(Ejemplo) Puedes</b> ponerte crema hidratante todos los días.", // Casilla 13
+        "<b>Desmaquíllate</b>", // Casilla 14
+        "<b>Correcta.</b>", // Casilla 15
+        "<b>(Ejemplo) Lo mejor es</b> tomar una infusión de tomillo antes de dormir.", // Casilla 16
+        "<b>Camine</b>", // Casilla 17
+        "<b>Correcta.</b>", // Casilla 18
+        "<b>(Ejemplo) Deberías</b> dejar de fumar, es malo para la salud.", // Casilla 19
+        "<b>tomen</b>", // Casilla 20
+        "<b>Incorrecta.</b> Corrección: ¡<b>Lávese</b> bien los pies con este tónico!", // Casilla 21
+        "<b>(Ejemplo) Va muy bien</b> hacer deporte o dormir 8 horas.", // Casilla 22
+        "<b>Hierve</b>", // Casilla 23
+        "<b>Correcta.</b>", // Casilla 24
+        "<b>(Ejemplo) ¡Tome</b> una infusión de tomillo con miel!", // Casilla 25
+        "<b>tomen</b>", // Casilla 26
+        "<b>Incorrecta.</b> Corrección: ¡<b>Come</b> (tú) más frutas y verduras...!", // Casilla 27
+        "<b>(Ejemplo) Lo mejor es</b> practicar natación o cuidar la postura.", // Casilla 28
+        "<b>Mezclad</b>, <b>poneos</b>", // Casilla 29
+        "<b>Correcta.</b>", // Casilla 30
+        "<b>(Ejemplo) Puedes</b> tomar una infusión de tomillo." // Casilla 31
+    ];
+
     // --- 2. SELECCIÓN DE ELEMENTOS DEL DOM ---
     const questionButtons = document.querySelectorAll('.question-btn');
     const modal = document.getElementById('popup-modal');
     const closeModalBtn = document.getElementById('close-btn');
     const questionContent = document.getElementById('question-content');
+    
     const dice = document.getElementById('dice');
     const diceFace = document.getElementById('dice-face');
     const pawns = document.querySelectorAll('.pawn');
-    const dropZones = document.querySelectorAll('.square, .pawn-box'); // Zonas para soltar fichas
+    const dropZones = document.querySelectorAll('.square, .pawn-box');
     
-    // --- 3. LÓGICA DE LA VENTANA MODAL (POP-UP) ---
-
-    // Función para abrir el modal con la pregunta correcta
+    // NUEVO: Selectores para el modal de respuestas
+    const answersBtn = document.getElementById('answers-btn');
+    const answersModal = document.getElementById('answers-modal');
+    const closeAnswersBtn = document.getElementById('close-answers-btn');
+    const answersList = document.getElementById('answers-list');
+    
+    // --- 3. LÓGICA DEL MODAL DE PREGUNTAS ---
     const openModal = (questionIndex) => {
         if (questions[questionIndex]) {
             questionContent.innerHTML = questions[questionIndex];
             modal.classList.add('active');
         }
     };
-
-    // Función para cerrar el modal
     const closeModal = () => {
         modal.classList.remove('active');
     };
 
-    // Asignar evento a cada botón de pregunta
     questionButtons.forEach(button => {
         button.addEventListener('click', () => {
             const index = button.dataset.questionIndex;
@@ -98,57 +135,78 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Eventos para cerrar el modal
     closeModalBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
-        // Cierra si se hace clic en el fondo oscuro
-        if (e.target === modal) {
-            closeModal();
-        }
+        if (e.target === modal) closeModal();
     });
 
-    // --- 4. LÓGICA DEL DADO ---
+    // --- 4. LÓGICA DEL DADO (Actualizada) ---
+    const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']; // Caras 1-6
+
     const rollDice = () => {
-        const result = Math.floor(Math.random() * 6) + 1;
-        diceFace.textContent = result;
+        const resultIndex = Math.floor(Math.random() * 6); // 0-5
+        diceFace.textContent = diceFaces[resultIndex];
     };
 
     dice.addEventListener('click', rollDice);
 
-    // --- 5. LÓGICA DE ARRASTRAR Y SOLTAR (DRAG & DROP) ---
-    
+    // --- 5. LÓGICA DE ARRASTRAR Y SOLTAR (Sin cambios) ---
     let draggedPawn = null;
 
-    // Eventos para las fichas (elementos arrastrables)
     pawns.forEach(pawn => {
         pawn.addEventListener('dragstart', (e) => {
-            draggedPawn = e.target; // Guarda la ficha que se está arrastrando
+            draggedPawn = e.target;
             setTimeout(() => e.target.classList.add('dragging'), 0);
         });
-
         pawn.addEventListener('dragend', (e) => {
             e.target.classList.remove('dragging');
             draggedPawn = null;
         });
     });
 
-    // Eventos para las zonas de destino (casillas y caja de inicio)
     dropZones.forEach(zone => {
         zone.addEventListener('dragover', (e) => {
-            e.preventDefault(); // Permite que se pueda soltar
+            e.preventDefault();
         });
-
         zone.addEventListener('drop', (e) => {
             e.preventDefault();
             if (draggedPawn) {
-                // 'e.target' puede ser la casilla o una ficha ya dentro.
-                // Usamos 'closest' para asegurar que siempre apuntamos a la casilla.
                 const dropTarget = e.target.closest('.square, .pawn-box');
                 if (dropTarget) {
                     dropTarget.appendChild(draggedPawn);
                 }
             }
         });
+    });
+
+    // --- 6. NUEVO: LÓGICA DEL MODAL DE RESPUESTAS ---
+    let answersGenerated = false;
+
+    const showAnswers = () => {
+        // Genera la lista de respuestas solo una vez
+        if (!answersGenerated) {
+            solutions.forEach((solution) => {
+                const li = document.createElement('li');
+                li.innerHTML = solution; // 'solution' ya incluye el HTML
+                answersList.appendChild(li);
+            });
+            answersGenerated = true;
+        }
+        // Muestra el modal
+        answersModal.classList.add('active');
+    };
+
+    const closeAnswersModal = () => {
+        answersModal.classList.remove('active');
+    };
+
+    // Eventos para el modal de respuestas
+    answersBtn.addEventListener('click', showAnswers);
+    closeAnswersBtn.addEventListener('click', closeAnswersModal);
+    answersModal.addEventListener('click', (e) => {
+        if (e.target === answersModal) {
+            closeAnswersModal();
+        }
     });
 
 });
