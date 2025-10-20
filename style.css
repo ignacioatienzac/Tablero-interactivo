@@ -29,14 +29,29 @@ body {
     margin-bottom: 20px;
 }
 
-.pawns-container {
-    flex-basis: 70%;
+.pawns-container, .answers-container, .dice-container {
+    padding: 0 10px;
 }
 
-.pawns-container h3, .dice-container h3 {
+.pawns-container {
+    flex-basis: 50%;
+}
+
+.answers-container {
+    flex-basis: 25%;
+    text-align: center;
+}
+
+.dice-container {
+    flex-basis: 25%;
+    text-align: center;
+}
+
+.pawns-container h3, .answers-container h3, .dice-container h3 {
     margin-top: 0;
     border-bottom: 2px solid #eee;
     padding-bottom: 5px;
+    min-height: 24px; /* Altura uniforme */
 }
 
 .pawn-box {
@@ -62,9 +77,21 @@ body {
     transform: scale(1.1);
 }
 
-.dice-container {
-    flex-basis: 25%;
-    text-align: center;
+/* NUEVO: Estilo del botón de acción */
+.action-btn {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.action-btn:hover {
+    background-color: #16a085;
 }
 
 .dice {
@@ -79,6 +106,7 @@ body {
     align-items: center;
     cursor: pointer;
     transition: transform 0.1s;
+    margin-top: 10px;
 }
 
 .dice:active {
@@ -86,13 +114,13 @@ body {
 }
 
 .dice-face {
-    font-size: 40px;
+    font-size: 50px; /* Aumentado para las caras Unicode */
+    color: #333;
 }
 
 /* --- TABLERO DE JUEGO --- */
 .board {
     display: grid;
-    /* 8 columnas para un tablero de 8x4 = 32 casillas */
     grid-template-columns: repeat(8, 1fr); 
     gap: 5px;
     background-color: #34495e;
@@ -103,7 +131,7 @@ body {
 
 .square {
     width: 100%;
-    height: 100px; /* Altura de las casillas */
+    height: 100px;
     background-color: #ecf0f1;
     border: 2px solid #bdc3c7;
     border-radius: 5px;
@@ -116,7 +144,6 @@ body {
     position: relative;
     padding: 5px;
     box-sizing: border-box;
-    /* Para que las fichas se apilen */
     flex-wrap: wrap; 
 }
 
@@ -128,7 +155,6 @@ body {
     left: 5px;
 }
 
-/* Casillas especiales */
 .square.start {
     background-color: #2ecc71;
     color: white;
@@ -141,7 +167,6 @@ body {
     font-size: 1.2rem;
 }
 
-/* Botones de pregunta */
 .question-btn {
     background-color: #3498db;
     color: white;
@@ -166,6 +191,8 @@ body {
     z-index: 1000;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal-overlay.active {
@@ -178,8 +205,8 @@ body {
     border-radius: 10px;
     position: relative;
     width: 90%;
-    max-width: 1100px; /* Tamaño similar al tablero */
-    min-height: 300px;
+    max-width: 1100px;
+    min-height: 200px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -192,6 +219,7 @@ body {
     color: #aaa;
     cursor: pointer;
     transition: color 0.2s;
+    z-index: 1010;
 }
 
 .close-btn:hover {
@@ -210,6 +238,24 @@ body {
     padding-bottom: 10px;
 }
 
-#question-content p {
+/* NUEVO: Estilos para el modal de respuestas */
+.answers-list-container {
+    max-height: 70vh; /* Altura máxima para la lista */
+    overflow-y: auto; /* Scroll si las respuestas son muchas */
+    margin-top: 20px;
+    padding-right: 15px; /* Espacio para la barra de scroll */
+}
+
+#answers-list {
+    text-align: left;
+    padding-left: 20px;
+}
+
+#answers-list li {
     margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+#answers-list li strong {
+    color: #3498db;
 }
