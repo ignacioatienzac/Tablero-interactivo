@@ -77,7 +77,7 @@ body {
     transform: scale(1.1);
 }
 
-/* NUEVO: Estilo del botón de acción */
+/* Estilo del botón de acción */
 .action-btn {
     background-color: #1abc9c;
     color: white;
@@ -238,7 +238,7 @@ body {
     padding-bottom: 10px;
 }
 
-/* NUEVO: Estilos para el modal de respuestas */
+/* Estilos para el modal de respuestas */
 .answers-list-container {
     max-height: 70vh; /* Altura máxima para la lista */
     overflow-y: auto; /* Scroll si las respuestas son muchas */
@@ -248,7 +248,7 @@ body {
 
 #answers-list {
     text-align: left;
-    padding-left: 20px;
+    padding-left: 45px; /* <-- MODIFICADO: Aumentado para que quepan los números 10-31 */
 }
 
 #answers-list li {
